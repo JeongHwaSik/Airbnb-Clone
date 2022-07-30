@@ -25,6 +25,7 @@ class Command(BaseCommand):
         number = options.get("number")
         seeder = Seed.seeder()
         all_users = user_models.User.objects.all()
+        all_rooms = room_models.Room.objects.all()
         seeder.add_entity(
             list_models.List,
             number,
@@ -32,10 +33,9 @@ class Command(BaseCommand):
                 "user": lambda x: random.choice(all_users),
             },
         )
-        created_lists = seeder.execute()
-        created_clean = flatten(list(created_lists.values()))
-        all_rooms = room_models.Room.objects.all()
-        for pk in created_clean:
+        list_created = seeder.execute()
+        list_clean = flatten(list(list_created.values()))
+        for pk in list_clean:
             chosen_list = list_models.List.objects.get(pk=pk)
             to_add = all_rooms[random.randint(0, 5) : random.randint(6, 30)]
             chosen_list.rooms.add(*to_add)
