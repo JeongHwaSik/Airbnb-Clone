@@ -1,6 +1,5 @@
 from django.views.generic import ListView
 from django.http import Http404
-from django.urls import reverse
 from django.shortcuts import render, redirect
 from . import models
 
