@@ -17,5 +17,8 @@ class HomeView(ListView):
 
 
 def room_detail(request, pk):
-    room = models.Room.objects.get(pk=pk)
-    return render(request, "rooms/detail.html", context={"room": room})
+    try:
+        room = models.Room.objects.get(pk=pk)
+        return render(request, "rooms/detail.html", context={"room": room})
+    except models.Room.DoesNotExist:
+        raise Http404()
