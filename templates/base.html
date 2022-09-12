@@ -1,19 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
     <title>{% block page_title %}{% endblock page_title %} Nbnb</title>
 </head>
-<body>
-    <header class="container max-w-full">
+<body class="text-gray-800">
+    <header class="container max-w-full flex items-center justify-between px-8 h-20 border-b" >
+        <div class="flex items-center">
+            <a class="mr-6" href="{% url 'core:home' %}">
+                <img class="w-6" src="{% static 'img/airbnblogo.png' %}"/>
+            </a>
+            {% block search-bar %}
+                <form method="get" action="{% url 'rooms:search' %}">
+                    <input class="border py-2 px-1 rounded-lg" name="city" placeholder="Search by City"/>
+                </form>
+            {% endblock search-bar %}
+        </div>
         {% include "partials/nav.html" %}
-        {% block search-bar %}
-            <form method="get" action="{% url 'rooms:search' %}">
-                <input name="city" placeholder="Search by City" />
-            </form>
-        {% endblock search-bar %}
     </header>
     {% block content %}{% endblock content %}
 
